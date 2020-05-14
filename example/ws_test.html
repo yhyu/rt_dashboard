@@ -1,0 +1,36 @@
+<html>
+    <script type = "text/javascript">
+        var timerID = 0;
+        var ws = new WebSocket("ws://127.0.0.1:54321/ws/topic1");
+        
+        function keepAlive() {
+            var timeout = 10000;  
+            if (ws.readyState == ws.OPEN) {  
+                ws.send('');
+            }  
+            timerId = setTimeout(keepAlive, timeout);  
+        }
+
+        function cancelKeepAlive() {  
+            if (timerId) {
+                window.clearTimeout(timerId);
+            }
+        }
+
+        ws.onopen = function() {
+            //alert("open connection")
+            keepAlive()
+        }
+
+        ws.onmessage = function (evt) { 
+            var received_msg = evt.data;
+            alert("Received message is..." + received_msg);
+        };
+
+        ws.onclose = function() {
+            // websocket is closed.
+            cancelKeepAlive()
+            alert("Connection is closed..."); 
+        };
+    </script>
+</html>
