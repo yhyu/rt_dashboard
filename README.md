@@ -11,8 +11,7 @@ go get golang.org/x/net/websocket
 ## How to use?
 
 1. Implement DSTopic interface to define a dashboard topic behavior: 
-
-```
+```go
 // DSTopic defines dashboard topic interface
 type DSTopic interface {
 	// GetTopic gets topic id
@@ -27,7 +26,7 @@ type DSTopic interface {
 ```
 
 2. Implement websocket handler
-```
+```go
 func DashboardServiceTopic1(conn *websocket.Conn) {
 	if err := ds.NewDashboard(myTopic, conn); err != nil {
 		log.Println("create topic1 dashboard fail:", err)
@@ -36,9 +35,9 @@ func DashboardServiceTopic1(conn *websocket.Conn) {
 ```
 
 3. Register topic and websocket handler
-```
+```go
 	RegisterTopic(&MyDSTopic{})
 	http.Handle("/ws/topic1", websocket.Handler(DashboardServiceTopic1))
 	log.Fatal(http.ListenAndServe("127.0.0.1:54321", nil))
 ```
-Notes: Please see the [example](https://github.com/yhyu/rt_dashaboard/tree/master/example)
+Notes: Please see the [example](https://github.com/yhyu/rt_dashboard/tree/master/example)
