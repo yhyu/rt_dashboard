@@ -34,7 +34,11 @@ type DSOptions struct {
 }
 
 // SetOptions sets dashboard configuration options
-func SetOptions(options DSOptions) {
+func SetOptions(options *DSOptions) {
+	if options == nil {
+		return
+	}
+
 	if options.DataBacklog != nil {
 		maxBacklog = *options.DataBacklog
 	}
